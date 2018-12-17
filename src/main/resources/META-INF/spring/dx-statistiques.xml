@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="statisticsFilter" class="org.jahia.modules.dxstatistics.filters.StatisticsFilter">
+        <property name="urlPatterns" value="/*" />
+    </bean>
+
+    <bean id="statisticSettingFilter" class="org.jahia.modules.dxstatistics.filters.StatisticSettingFilter">
+        <property name="priority" value="3"></property>
+        <property name="applyOnMainResource" value="true"/>
+    </bean>
+
+    <bean id="pageStatisticFilter" class="org.jahia.modules.dxstatistics.filters.PageStatisticsFilter">
+        <property name="priority" value="3"></property>
+        <property name="applyOnMainResource" value="true"/>
+    </bean>
+
+
+    <bean id="testInsertAction" class="org.jahia.modules.dxstatistics.actions.InsertMetricTestAction">
+        <property name="name" value="testInsertAction"></property>
+    </bean>
+
+    <bean parent="jobSchedulingBean">
+        <property name="ramJob" value="true"/>
+        <property name="trigger">
+            <bean class="org.quartz.CronTrigger">
+                <property name="name" value="DXStatisticsCronTrigger"/>
+                <!-- Will start the process at 4 a.m -->
+                <property name="cronExpression" value="${DXStatisticsCronExpression:0 */5 * * * ?}"/>
+                <!--<property name="cronExpression" value="${DXStatisticsCronExpression:*/10 * * * * ?}"/>-->
+            </bean>
+        </property>
+        <property name="jobDetail">
+            <bean class="org.springframework.scheduling.quartz.JobDetailBean">
+                <property name="name" value="DXStatisticsJob"/>
+                <!-- This jobs will call searchEnginesUrl+urlEncoded(sitesUrl+/sitemap.xml)-->
+                <!-- As an example here it will call http://www.google.com/webmasters/tools/ping?sitemap=http%3A%2F%2Ftata.mondomaine.com%2Fsitemap.xml -->
+                <property name="group" value="DXStatisticsJob"/>
+                <property name="jobClass" value="org.jahia.modules.dxstatistics.jobs.StatisticsPersistenceJob"/>
+            </bean>
+        </property>
+    </bean>
+
+</beans>

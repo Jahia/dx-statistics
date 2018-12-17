@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content xmlns:j="http://www.jahia.org/jahia/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0">
+    <modules jcr:primaryType="jnt:modules">
+        <dx-statistics j:dependencies="bootstrap3-components bootstrap3-core default"
+                     j:modulePriority="0"
+                     j:moduleType="module"
+                     j:title="dx-statistics"
+                     jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                     jcr:primaryType="jnt:module">
+                
+                <portlets jcr:primaryType="jnt:portletFolder"/>
+                <files jcr:primaryType="jnt:folder"/>
+                <contents jcr:primaryType="jnt:contentFolder"/>
+                <templates j:rootTemplatePath="/base" jcr:primaryType="jnt:templatesFolder">
+                    <files jcr:primaryType="jnt:folder"/>
+                    <contents jcr:primaryType="jnt:contentFolder"/>
+                    <server-settings-base j:view="serverSettings" jcr:primaryType="jnt:template">
+                        <statistics-panel j:applyOn="jnt:globalSettings"
+                                 j:defaultTemplate="true"
+                                 j:view="serverSettings"
+                                 jcr:primaryType="jnt:contentTemplate">
+                            <j:translation_en jcr:language="en"
+                                    jcr:mixinTypes="mix:title"
+                                    jcr:primaryType="jnt:translation"
+                                    jcr:title="Statistics Panel"/>
+                            <pagecontent jcr:primaryType="jnt:contentList">
+                                <dxstatisticspanel jcr:primaryType="jnt:dxStatisticsPanel"/>
+                            </pagecontent>
+                        </statistics-panel>
+                        <j:translation_en jcr:language="en"
+                                 jcr:mixinTypes="mix:title"
+                                 jcr:primaryType="jnt:translation"
+                                 jcr:title="server-settings-base"/>
+                    </server-settings-base>
+                </templates>
+                
+            </dx-statistics>
+    </modules>
+</content>
